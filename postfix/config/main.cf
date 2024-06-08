@@ -18,8 +18,8 @@ broken_sasl_auth_clients = no
 additional_config_dir = /etc/postfix/config
 
 smtpd_forbidden_commands = CONNECT GET POST
-smtpd_tls_cert_file = VMB_SSL_CRT
-smtpd_tls_key_file = VMB_SSL_KEY
+smtpd_tls_cert_file = VIMBADMIN_SSL_CRT
+smtpd_tls_key_file = VIMBADMIN_SSL_KEY
 smtp_tls_CAfile = 
 smtpd_tls_auth_only = yes
 smtpd_tls_security_level = may
@@ -38,8 +38,8 @@ smtp_tls_protocols=!SSLv2,!SSLv3
 smtp_always_send_ehlo = yes
 smtp_reply_filter = pcre:/etc/postfix/smtp_reply_filter
 
-myhostname = VMB_MYHOSTNAME
-mydomain = VMB_DOMAIN
+myhostname = VIMBADMIN_HOSTNAME
+mydomain = VIMBADMIN_DOMAIN
 mydestination = localhost
 mynetworks = 127.0.0.0/8 [::1]/128
 myorigin = ${mydomain}
@@ -92,13 +92,13 @@ block_dsl            = regexp:$additional_config_dir/block_dsl
 helo_access          = check_helo_access pcre:$additional_config_dir/helo_checks
 mx_access            = check_sender_mx_access cidr:$additional_config_dir/mx_access
 
-smtpd_milters           = inet:127.0.0.1:7357, inet:127.0.0.1:8891, inet:127.0.0.1:8893, unix:/run/spamass-milter/spamass-milter.sock
+smtpd_milters           = inet:127.0.0.1:7357, inet:127.0.0.1:8891, inet:127.0.0.1:8893, inet:127.0.0.1:783
 non_smtpd_milters       = ${smtpd_milters}
 milter_default_action   = accept
 milter_protocol   = 6
 
 #notify_classes = bounce, delay, policy, protocol, resource, software
-#error_notice_recipient = VMB_ADMIN_MAIL
+#error_notice_recipient = VIMBADMIN_ADMIN_EMAIL
 
 smtpd_client_restrictions = rbl_abuseat_org,
                             rbl_spamhaus_org,
