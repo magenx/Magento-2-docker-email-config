@@ -23,7 +23,7 @@ RUN <<EOF
     chown vmail:vmail /home/vmail
 EOF
 
-COPY dovecot.conf dovecot-sql.conf /etc/dovecot/
+COPY config/ /etc/dovecot/
 
 RUN <<EOF
     sed -i "s,VIMBADMIN_SSL_CRT,${VIMBADMIN_SSL_CRT}," /etc/dovecot/dovecot.conf
