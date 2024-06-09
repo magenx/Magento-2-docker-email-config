@@ -64,12 +64,12 @@ smtpd_restriction_classes = rbl_abuseat_org,
                             rbl_dnsrbl,
                             rbl_spam_fr,
                             rbl_bad_psky_me,
-                            white_client_ip,
-                            black_client_ip,
-                            block_dsl,
+                            permit_client_ip,
+                            reject_client_ip,
+                            reject_dsl,
                             helo_access,
-                            white_client,
-                            black_client,
+                            permit_client,
+                            reject_client,
                             mx_access
 
 rbl_abuseat_org      = reject_rbl_client cbl.abuseat.org
@@ -84,12 +84,12 @@ rbl_dnsrbl           = reject_rbl_client dnsrbl.org
 rbl_spam_fr          = reject_rbl_client all.spam-rbl.fr
 rbl_bad_psky_me      = reject_rbl_client bad.psky.me
 
-white_client_ip      = check_client_access pcre:$additional_config_dir/white_client_ip
-black_client_ip      = check_client_access pcre:$additional_config_dir/black_client_ip
-white_client         = check_sender_access pcre:$additional_config_dir/white_client
-black_client         = check_sender_access pcre:$additional_config_dir/black_client
-block_dsl            = regexp:$additional_config_dir/block_dsl
-helo_access          = check_helo_access pcre:$additional_config_dir/helo_checks
+permit_client_ip      = check_client_access pcre:$additional_config_dir/permit_client_ip
+reject_client_ip      = check_client_access pcre:$additional_config_dir/reject_client_ip
+permit_client         = check_sender_access pcre:$additional_config_dir/permit_client
+reject_client         = check_sender_access pcre:$additional_config_dir/reject_client
+reject_dsl            = regexp:$additional_config_dir/reject_dsl
+helo_check          = check_helo_access pcre:$additional_config_dir/helo_check
 mx_access            = check_sender_mx_access cidr:$additional_config_dir/mx_access
 
 smtpd_milters           = inet:127.0.0.1:7357, inet:127.0.0.1:8891, inet:127.0.0.1:8893, inet:127.0.0.1:783
@@ -111,12 +111,12 @@ smtpd_client_restrictions = rbl_abuseat_org,
                             rbl_dnsrbl,
                             rbl_spam_fr,
                             rbl_bad_psky_me,
-                            white_client_ip,
-                            black_client_ip,
-                            white_client,
-                            black_client,
+                            permit_client_ip,
+                            reject_client_ip,
+                            permit_client,
+                            reject_client,
                             helo_access,
-                            block_dsl,
+                            reject_dsl,
                             permit_mynetworks,
                             permit_sasl_authenticated,
                             reject_unauth_destination,
@@ -125,9 +125,9 @@ smtpd_client_restrictions = rbl_abuseat_org,
                             reject_unknown_recipient_domain,
                             reject_unknown_sender_domain
 
-smtpd_sender_restrictions = white_client,
-                            white_client_ip,
-                            black_client_ip,
+smtpd_sender_restrictions = permit_client,
+                            permit_client_ip,
+                            reject_client_ip,
                             reject_unknown_recipient_domain,
                             reject_unknown_sender_domain,
                             reject_non_fqdn_recipient,
@@ -140,7 +140,7 @@ smtpd_sender_restrictions = white_client,
 				
 smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
 
-smtpd_recipient_restrictions = white_client,
+smtpd_recipient_restrictions = permit_client,
                                helo_access,
                                reject_unknown_recipient_domain,
                                reject_unknown_sender_domain,
