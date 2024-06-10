@@ -14,7 +14,7 @@ ARG VIMBADMIN_SSL_KEY
 ARG VIMBADMIN_DATABASE_USER
 ARG VIMBADMIN_DATABASE_PASSWORD
 ARG VIMBADMIN_DATABASE_HOST
-ARG VIMBADMIN_DATABASE_NAME
+ARG VIMBADMIN_DATABASE
 
 RUN <<EOF
     apk update
@@ -35,7 +35,7 @@ COPY <<EOF /etc/postfix/mysql/virtual-alias-maps.cf
      user = ${VIMBADMIN_DATABASE_USER}
      password = ${VIMBADMIN_DATABASE_PASSWORD}
      hosts = ${VIMBADMIN_DATABASE_HOST}
-     dbname = ${VIMBADMIN_DATABASE_NAME}
+     dbname = ${VIMBADMIN_DATABASE}
      query = SELECT goto FROM alias WHERE address = '%s' AND active = '1'
 EOF
 
@@ -43,7 +43,7 @@ COPY <<EOF /etc/postfix/mysql/virtual-mailbox-domains.cf
      user = ${VIMBADMIN_DATABASE_USER}
      password = ${VIMBADMIN_DATABASE_PASSWORD}
      hosts = ${VIMBADMIN_DATABASE_HOST}
-     dbname = ${VIMBADMIN_DATABASE_NAME}
+     dbname = ${VIMBADMIN_DATABASE}
      query = SELECT domain FROM domain WHERE domain = '%s' AND backupmx = '0' AND active = '1'
 EOF
 
@@ -51,7 +51,7 @@ COPY <<EOF /etc/postfix/mysql/virtual-mailbox-maps.cf
      user = ${VIMBADMIN_DATABASE_USER}
      password = ${VIMBADMIN_DATABASE_PASSWORD}
      hosts = ${VIMBADMIN_DATABASE_HOST}
-     dbname = ${VIMBADMIN_DATABASE_NAME}
+     dbname = ${VIMBADMIN_DATABASE}
      query = SELECT maildir FROM mailbox WHERE username = '%s' AND active = '1'
 EOF
 
