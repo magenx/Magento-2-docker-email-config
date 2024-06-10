@@ -18,9 +18,3 @@ RUN <<EOF
     composer install --prefer-dist --no-dev
 EOF
 
-RUN <<EOF
-    ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
-    echo ${TIMEZONE} > /etc/timezone
-    ln -s /usr/bin/${PHP_VERSION} /usr/local/bin/php
-EOF
-
